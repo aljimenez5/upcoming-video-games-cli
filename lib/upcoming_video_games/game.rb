@@ -1,13 +1,13 @@
 class UpcomingVideoGames::Game
-  attr_accessor :name, :release_month, :release_date, :url, :console, :price, :description
+  attr_accessor :name, :release_month, :release_date, :game_url, :console, :price, :description
 
   @@all = []
 
-  def initialize(name = nil, release_month = nil, release_date = nil, url = nil)
+  def initialize(name = nil, release_month = nil, release_date = nil, game_url = nil)
     @name = name
     @release_month = release_month
     @release_date = release_date
-    @url = url
+    @game_url = game_url
     @@all << self
   end
 
@@ -24,6 +24,11 @@ class UpcomingVideoGames::Game
 
   def self.all
     @@all
+  end
+
+  def game_url
+    Nokogiri::HTML(open(self.game_url))
+    binding.pry
   end
 
 end
