@@ -2,7 +2,12 @@ class UpcomingVideoGames::CLI
 
   def call
     puts "Upcoming Video Games:"
+    list_games
+  end
+
+  def list_games
     
+
   end
 
 
