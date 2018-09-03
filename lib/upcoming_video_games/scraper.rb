@@ -6,24 +6,21 @@ class UpcomingVideoGames::Scraper
   end
 
   def self.scrape_page
-    @scraped_games = []
-    self.gamestop_page.css("div.month").each do |month|
-      release_month = month.css("h3").text
-      self.gamestop_page.css("a.product_spot").each do |game|
+    scraped_games = []
+    gamestop_page.css("div.month").each do |month|
+      release_month = month.css("h3").text.sub('Releases', '').strip
+      gamestop_page.css("a.product_spot").each do |game|
         release_date = game.css("p span").text
-        name = game.css("p").text.delete(release_date).strip
+        name = game.css("p").text.sub(release_date, '').strip
         url = "https://www.gamestop.com" + gamestop_page.css("a.product_spot").attr("href").text
-        @scraped_games << {:name => name, :release_date => release_date, :release_month => release_month, :url => url}
-        #UpcomingVideoGames::Game.new(scraped_games)
+        UpcomingVideoGames::Game.new(name, release_month, release_date, url)
       end
     end
-    @scraped_games
   end
 
   def self.scrape_game_details
-    game_details = []
-
-    second_page = Nokogiri::HTML(open(Game.url))
+    game_page = Nokogiri::HTML(open(Game.url))
+    #binding.pry
 
   end
 
