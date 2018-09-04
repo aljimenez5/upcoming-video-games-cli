@@ -11,13 +11,14 @@ class UpcomingVideoGames::Scraper
       gamestop_page.css("a.product_spot").each do |game|
         release_date = game.css("p span").text
         name = game.css("p").text.sub(release_date, '').strip
-        url = "https://www.gamestop.com" + gamestop_page.css("a.product_spot").attr("href").text
-        UpcomingVideoGames::Game.new(name, release_month, release_date, game_url)
+        url = "https://www.gamestop.com" + gamestop_page.css("a.product_spot").attribute("href").text
+        scraped_games << {:name => name, :release_month => release_month, :release_date => release_date, :url => url}
       end
     end
+    scraped_games
   end
 
-  def self.scrape_game_details(game_url = UpcomingVideoGames::Game.game_url)
+  def self.scrape_game_details(game_url)
     game_page = Nokogiri::HTML(open(game_url))
   end
 

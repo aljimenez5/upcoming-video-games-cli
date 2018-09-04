@@ -1,34 +1,38 @@
 class UpcomingVideoGames::Game
-  attr_accessor :name, :release_month, :release_date, :game_url, :console, :price, :description
+  attr_accessor :name, :release_month, :release_date, :url, :console, :price, :description
 
-  @@all = []
+  @@games = []
 
-  def initialize(name = nil, release_month = nil, release_date = nil, game_url = nil)
-    @name = name
-    @release_month = release_month
-    @release_date = release_date
-    @game_url = game_url
-    @@all << self
+  def initialize(game_hash)
+    scraped_games.each {|key, value| self.send(("#{key}="), value)}
+    @@games << self
   end
 
 
-  # def self.create_by_each_game(#scraped_games = UpcomingVideoGames::Scraper.scrape_page)
-  #   scraped_games.each do |game|
-  #     self.new(game)
-  #   end
-  # end
+  def self.create_by_each_game(scraped_games = UpcomingVideoGames::Scraper.scrape_page)
+    scraped_games.each do |game|
+      self.new(game_hash)
+    end
+  end
 
   def add_game_details()
 
   end
 
-  def self.all
-    @@all
+  def self.games
+    @@games
   end
 
-  def game_url
-    Nokogiri::HTML(open(self.game_url))
-    binding.pry
+  def self.list_games #Using this to call in cli
+    @@games.each.with_index(1) do |game, index|
+      puts "#{index}. #{game.name} | #{game.release_date}"
+    end
+  end
+
+  def self.game_url #I intend for this to send game.url to the scraper class
+    @@games.each do |game|
+      UpcomingVideoGames::Scraper.scrape_game_details(game.url)
+    end
   end
 
 end
