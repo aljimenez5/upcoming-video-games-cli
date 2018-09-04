@@ -5,14 +5,14 @@ class UpcomingVideoGames::Game
   @@games = []
 
   def initialize(game_hash)
-    scraped_games.each {|key, value| self.send(("#{key}="), value)}
+    game_hash.each {|key, value| self.send(("#{key}="), value)}
     @@games << self
   end
 
 
   def self.create_by_each_game(scraped_games = UpcomingVideoGames::Scraper.scrape_page)
     scraped_games.each do |game|
-      self.new(game_hash)
+      self.new(game)
     end
   end
 
@@ -30,9 +30,9 @@ class UpcomingVideoGames::Game
     end
   end
 
-  def self.game_url #I intend for this to send game.url to the scraper class
-    @@games.each do |game|
-      UpcomingVideoGames::Scraper.scrape_game_details(game.url)
+  def game_url #I intend for this to send game.url to the scraper class
+    self.games.each do |game|
+      #UpcomingVideoGames::Scraper.scrape_game_details(game.url)
     end
   end
 
