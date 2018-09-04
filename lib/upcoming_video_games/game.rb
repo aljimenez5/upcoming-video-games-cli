@@ -27,9 +27,8 @@ class UpcomingVideoGames::Game
   end
 
   def game_url #I created this method to send the game.url to the scraper class to scrape
-    @@games.each do |game|
-      UpcomingVideoGames::Scraper.scrape_game_details(game.url)
-    end
+    @@games.each {|game|
+      UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
   end
 
   def self.add_game_details
