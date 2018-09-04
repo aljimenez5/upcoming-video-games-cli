@@ -31,8 +31,10 @@ class UpcomingVideoGames::Game
       UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
   end
 
-  def self.add_game_details
-  #this method will eventually pull from scraped data from Scraper class to add to object
+  def self.add_game_details(scraped_details = UpcomingVideoGames::Scraper.scrape_game_details(game_url))
+    #now I am going to bring in the hashes of details in the Scraper class
+    scraped_details.each {|key, value| self.send(("#{key}="), value)}
+    binding.pry
   end
 
 end

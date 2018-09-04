@@ -23,26 +23,26 @@ class UpcomingVideoGames::Scraper
     if game_url.include?("/collection")
       game_page.css("div.product").each do |game_choice|
         link = game_choice.css("div.product_image a").attribute("href").value
-        opened_link = Nokogiri::HTML(open(link))
-        price = opened_link.css("h3.ats-prodBuy-price").text
-        console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-        description = opened_link.css("p.productbyline").text.strip
-        details << {:price => price, :console => console, :description => description}
-      elsif game_url.include?("/browse")
-        game_page.css("div.product.new_product").each do |game_choice|
-          link = game_choice.css("a.ats-product-title-lnk").attribute("href").value.strip
-          opened_link = Nokogiri::HTML(open(link))
-          console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-          description = opened_link.css("p.productbyline").text.strip
-          details << {:price => price, :console => console, :description => description}
-        else
-          console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-          description = opened_link.css("p.productbyline").text.strip
-          details << {:price => price, :console => console, :description => description}
-        end
       end
-      details
+      opened_link = Nokogiri::HTML(open(link))
+      price = opened_link.css("h3.ats-prodBuy-price").text
+      console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+      description = opened_link.css("p.productbyline").text.strip
+      details << {:price => price, :console => console, :description => description}
+    elsif game_url.include?("/browse")
+      game_page.css("div.product.new_product").each do |game_choice|
+        link = game_choice.css("a.ats-product-title-lnk").attribute("href").value.strip
+      end
+      opened_link = Nokogiri::HTML(open(link))
+      console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+      description = opened_link.css("p.productbyline").text.strip
+      details << {:price => price, :console => console, :description => description}
+    else
+      console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+      description = opened_link.css("p.productbyline").text.strip
+      details << {:price => price, :console => console, :description => description}
     end
+    details
   end
 
 
