@@ -35,6 +35,7 @@ class UpcomingVideoGames::Game
     #now I am going to bring in the hashes of details in the Scraper class
     scraped_details.each {|key, value| self.send(("#{key}="), value)}
     binding.pry
+    #not working yet
   end
 
 end
