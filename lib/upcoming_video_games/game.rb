@@ -26,6 +26,7 @@ class UpcomingVideoGames::Game
 
   def self.list_games #Using this to call in cli
     @@games.each.with_index(1) do |game, index|
+      binding.pry
       puts "#{index}. #{game.name} | #{game.release_date}"
     end
   end
