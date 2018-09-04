@@ -1,5 +1,6 @@
+require 'pry'
 class UpcomingVideoGames::Game
-  attr_accessor :name, :release_month, :release_date, :url, :console, :price, :description
+  attr_accessor :name, :release_date, :url, :console, :price, :description
 
   @@games = []
 
@@ -15,9 +16,9 @@ class UpcomingVideoGames::Game
     end
   end
 
-  def add_game_details()
-
-  end
+  # def add_game_details()
+  # #this method will eventually pull from scraped data from Scraper class to add to object
+  # end
 
   def self.games
     @@games
