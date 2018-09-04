@@ -26,14 +26,13 @@ class UpcomingVideoGames::Game
 
   def self.list_games #Using this to call in cli
     @@games.each.with_index(1) do |game, index|
-      binding.pry
       puts "#{index}. #{game.name} | #{game.release_date}"
     end
   end
 
   def game_url #I intend for this to send game.url to the scraper class
-    self.games.each do |game|
-      #UpcomingVideoGames::Scraper.scrape_game_details(game.url)
+    @@games.each do |game|
+      UpcomingVideoGames::Scraper.scrape_game_details(game.url)
     end
   end
 
