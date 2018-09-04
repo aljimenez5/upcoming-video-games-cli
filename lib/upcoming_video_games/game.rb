@@ -16,10 +16,6 @@ class UpcomingVideoGames::Game
     end
   end
 
-  # def add_game_details()
-  # #this method will eventually pull from scraped data from Scraper class to add to object
-  # end
-
   def self.games
     @@games
   end
@@ -30,10 +26,14 @@ class UpcomingVideoGames::Game
     end
   end
 
-  def game_url #I intend for this to send game.url to the scraper class
+  def game_url #I created this method to send the game.url to the scraper class to scrape
     @@games.each do |game|
       UpcomingVideoGames::Scraper.scrape_game_details(game.url)
     end
+  end
+
+  def self.add_game_details
+  #this method will eventually pull from scraped data from Scraper class to add to object
   end
 
 end

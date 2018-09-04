@@ -18,6 +18,18 @@ class UpcomingVideoGames::Scraper
 
   def self.scrape_game_details(game_url)
     game_page = Nokogiri::HTML(open(game_url))
+    #creating if statements because not all game urls lead to the pages that have the same code
+    if game_url.include?("/collection")
+      game_page.css("div.product").each do |game_choice|
+        link = game_choice.css("div.product_image a").attribute("href").value
+        opened_link = Nokogiri::HTML(open(link))
+        price = opened_link.css("h3.ats-prodBuy-price").text
+        console = opened_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+        description = opened_link.css("p.productbyline").text.strip
+      end
+
+
+    end
   end
 
 
