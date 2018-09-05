@@ -1,7 +1,7 @@
 class UpcomingVideoGames::CLI
 
   def call
-    #UpcomingVideoGames::Scraper.new
+    #UpcomingVideoGames::Game.new ??
     puts "Welcome to upcoming video game release dates!"
     puts "Here is a list of upcoming Video Games:"
     list_games

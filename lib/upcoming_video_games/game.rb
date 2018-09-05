@@ -21,7 +21,8 @@ class UpcomingVideoGames::Game
   end
 
   def self.list_games #Using this to call in cli
-    @@games.each.with_index(1) do |game, index|
+    sorted_games = @@games.sort_by {|game_obj| game_obj.release_date}
+    sorted_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
     end
   end
@@ -31,10 +32,9 @@ class UpcomingVideoGames::Game
       UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
   end
 
-  def self.add_game_details(scraped_details = UpcomingVideoGames::Scraper.scrape_game_details(game_url))
-    #now I am going to bring in the hashes of details from the Scraper class
-    scraped_details.each {|key, value| self.send(("#{key}="), value)}
-    binding.pry
+  def add_game_details(details)
+    #or add_game_details(scraped_details = UpcomingVideoGames::Scraper.scrape_game_details(game_url))
+    details.each {|key, value| self.send(("#{key}="), value)}
     #not working yet
   end
 
