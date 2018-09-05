@@ -1,13 +1,14 @@
 require 'pry'
 class UpcomingVideoGames::Scraper
 
-  def self.gamestop_page
-    Nokogiri::HTML(open("https://www.gamestop.com/collection/upcoming-video-games"))
-  end
+  attr_accessor :gamestop_page
+
+  def initialize(url)
+    @gamestop_page = Nokogiri::HTML(open(url))
 
   def self.scrape_page
     scraped_games = []
-    gamestop_page.css("a.product_spot").each do |game|
+    @gamestop_page.css("a.product_spot").each do |game|
       release_date = game.css("p span").text
       name = game.css("p").text.sub(release_date, '').strip
       url = "https://www.gamestop.com" + game.attribute("href").value
@@ -16,7 +17,6 @@ class UpcomingVideoGames::Scraper
     scraped_games
   end
 
-  #going to fix a few errors that I made and didn't catch before
   def self.scrape_game_details(game_url)
     game_page = Nokogiri::HTML(open(game_url))
       #creating if statements because not all game urls lead to the pages that have the same code

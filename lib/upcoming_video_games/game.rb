@@ -20,13 +20,6 @@ class UpcomingVideoGames::Game
     @@games
   end
 
-  def self.list_games #Using this to call in cli
-    sorted_games = @@games.sort_by {|game_obj| game_obj.release_date}
-    sorted_games.each.with_index(1) do |game, index|
-      puts "#{index}. #{game.name} | #{game.release_date}"
-    end
-  end
-
   def game_url #I created this method to send the game.url to the scraper class to scrape
     @@games.each {|game|
       UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
