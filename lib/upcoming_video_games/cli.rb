@@ -9,19 +9,30 @@ class UpcomingVideoGames::CLI
   def call
     puts "Here is a list of games both released and to-be-released in 2018:"
     list_games
-
+    more_details
   end
 
   def list_games
     all_games = UpcomingVideoGames::Game.games
     all_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
+      #puts "#{game.price}" ##this is just a test to see if the data is there
     end
   end
 
   def more_details
-    puts "Choose number of game you would like to view more info on:"
+    puts "Type in the number listed next to the game you would like to view more info on:"
     selection = gets.strip
+    all_games = UpcomingVideoGames::Game.games
+    binding.pry
+    # all_games.each.with_index(1) do |game, index|
+    #   if selection == index
+    #     binding.pry
+    #     puts "#{index}. #{game.name} | #{game.release_date}"
+    #     puts "#{game.console} | #{game.price}"
+    #     puts "#{game.description}"
+    #   end
+    
 
   end
 

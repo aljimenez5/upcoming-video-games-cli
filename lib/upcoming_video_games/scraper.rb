@@ -1,4 +1,3 @@
-require 'pry'
 class UpcomingVideoGames::Scraper
 
   attr_accessor :gamestop_page
