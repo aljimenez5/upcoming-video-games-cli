@@ -15,9 +15,11 @@ class UpcomingVideoGames::Scraper
     scraped_games = []
     @gamestop_page.css("a.product_spot").each do |game|
       release_date = game.css("p span").text
+      release_month = Date::MONTHNAMES[(Date.strptime(release_date, '%m/%d/%Y')).mon]
       name = game.css("p").text.sub(release_date, '').strip
       url = "https://www.gamestop.com" + game.attribute("href").value
-      scraped_games << {:name => name, :release_date => release_date, :url => url}
+      binding.pry
+      scraped_games << {:name => name, :release_date => release_date, :release_month => release_month, :url => url}
     end
     UpcomingVideoGames::Game.create_by_each_game(scraped_games)
   end

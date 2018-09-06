@@ -24,7 +24,6 @@ class UpcomingVideoGames::CLI
     puts "Type in the number listed next to the game you would like to view more info on:"
     selection = gets.strip
     all_games = UpcomingVideoGames::Game.games
-    binding.pry
     # all_games.each.with_index(1) do |game, index|
     #   if selection == index
     #     binding.pry
@@ -32,7 +31,7 @@ class UpcomingVideoGames::CLI
     #     puts "#{game.console} | #{game.price}"
     #     puts "#{game.description}"
     #   end
-    
+
 
   end
 
