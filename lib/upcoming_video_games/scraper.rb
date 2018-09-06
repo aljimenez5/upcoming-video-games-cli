@@ -9,7 +9,7 @@ class UpcomingVideoGames::Scraper
 
   def scrape
     scrape_page
-    #scrape_game_details
+    scrape_game_details
   end
 
   def scrape_page
@@ -23,39 +23,38 @@ class UpcomingVideoGames::Scraper
     UpcomingVideoGames::Game.create_by_each_game(scraped_games)
   end
 
-  # def scrape_game_details()
-  #   game_url = UpcomingVideoGames::Game.game_url
-  #   game_page = Nokogiri::HTML(open(game_url))
-  #     #creating if statements because not all game urls lead to the pages that have the same code
-  #   details = []
-  #   if game_url.include?("/collection")
-  #     game_page.css("div.product").each do |game_choice|
-  #       collection_link = "https://www.gamestop.com" + game_choice.css("div.product_image a").attribute("href").value
-  #     end
-  #     first_link = Nokogiri::HTML(open(collection_link))
-  #     first_price = first_link.css("h3.ats-prodBuy-price").text
-  #     first_console = first_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-  #     first_description = first_link.css("p.productbyline").text.strip
-  #     details << {:price => first_price, :console => first_console, :description => first_description}
-  #   elsif game_url.include?("/browse")
-  #     game_page.css("div.product.new_product").each do |game_choice|
-  #       browse_link = "https://www.gamestop.com" + game_choice.css("a.ats-product-title-lnk").attribute("href").value.strip
-  #     end
-  #     second_link = Nokogiri::HTML(open(browse_link))
-  #     second_price = second_link.css("h3.ats-prodBuy-price").text
-  #     second_console = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-  #     second_description = second_link.css("p.productbyline").text.strip
-  #     details << {:price => second_price, :console => second_console, :description => second_description}
-  #   else
-  #     third_price = game_page.css("h3.ats-prodBuy-price").text
-  #     third_console = game_page.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-  #     third_description = game_page.css("p.productbyline").text.strip
-  #     details << {:price => third_price, :console => third_console, :description => third_description}
-  #   end
-  #   UpcomingVideoGames::Game.add_game_details(details)
-  #   #or return details
-  # end
-
+  def scrape_game_details
+    UpcomingVideoGames::Game.games.each do |game| game.url
+      game_page = Nokogiri::HTML(open(game.url))
+      details = []
+      if game.url.include?("/collection")
+        game_page.css("div.product").each do |game_choice|
+          @collection_link = "https://www.gamestop.com" + game_choice.css("div.product_image a").attribute("href").value
+        end
+        first_link = Nokogiri::HTML(open(@collection_link))
+        first_price = first_link.css("h3.ats-prodBuy-price").text.strip
+        first_console = first_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+        first_description = first_link.css("p.productbyline").text.strip
+        details << {:price => first_price, :console => first_console, :description => first_description}
+      elsif game.url.include?("/browse")
+        game_page.css("div.product.new_product").each do |game_choice|
+          @browse_link = "https://www.gamestop.com" + game_choice.css("a.ats-product-title-lnk").attribute("href").value.strip
+        end
+        second_link = Nokogiri::HTML(open(@browse_link))
+        second_price = second_link.css("h3.ats-prodBuy-price").text.strip
+        second_console = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+        second_description = second_link.css("p.productbyline").text.strip
+        details << {:price => second_price, :console => second_console, :description => second_description}
+      else
+        third_price = game_page.css("h3.ats-prodBuy-price").text.strip
+        third_console = game_page.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+        third_description = game_page.css("p.productbyline").text.strip
+        details << {:price => third_price, :console => third_console, :description => third_description}
+      end
+      UpcomingVideoGames::Game.add_game_details(details)
+      binding.pry
+    end
+  end
 
 
 end

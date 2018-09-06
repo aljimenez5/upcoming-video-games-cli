@@ -7,17 +7,24 @@ class UpcomingVideoGames::CLI
   end
 
   def call
-    puts "Here is a list of games released and to be released in 2018:"
+    puts "Here is a list of games both released and to-be-released in 2018:"
     list_games
+
   end
 
   def list_games
     all_games = UpcomingVideoGames::Game.games
-    sorted_games = all_games.sort_by {|game_obj| game_obj.release_date}
-    sorted_games.each.with_index(1) do |game, index|
+    all_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
     end
   end
+
+  def more_details
+    puts "Choose number of game you would like to view more info on:"
+    selection = gets.strip
+
+  end
+
 
 end
 

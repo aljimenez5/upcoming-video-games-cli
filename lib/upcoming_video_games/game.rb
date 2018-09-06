@@ -12,22 +12,16 @@ class UpcomingVideoGames::Game
 
   def self.create_by_each_game(scraped_games)
     scraped_games.each do |game|
-      self.new(game) unless game[:release_date].end_with?("2019")
+      self.new(game)
     end
   end
 
   def self.games
-    @@games
+    @@games.sort_by {|game_obj| game_obj.release_date}
   end
 
-  # def self.game_url #I created this method to send the game.url to the scraper class to scrape
-  #   @@games.each {|game| UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
-  # end
-
-  def add_game_details(details)
-    #or add_game_details(scraped_details = UpcomingVideoGames::Scraper.scrape_game_details(game_url))
+  def self.add_game_details(details)
     details.each {|key, value| self.send(("#{key}="), value)}
-    #not working yet
   end
 
 end
