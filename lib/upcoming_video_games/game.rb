@@ -20,7 +20,7 @@ class UpcomingVideoGames::Game
     @@games.sort_by {|game_obj| game_obj.release_date}
   end
 
-  def self.add_game_details(details)
+  def add_game_details(details)
     details.each {|key, value| self.send(("#{key}="), value)}
   end
 
