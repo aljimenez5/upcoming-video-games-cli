@@ -12,7 +12,6 @@ class UpcomingVideoGames::CLI
     puts ""
     list_all_games
     puts ""
-
     input = ""
     while input != "exit"
       puts "GAMES BY MONTH ENTER: [January, February, March...]"
@@ -21,6 +20,8 @@ class UpcomingVideoGames::CLI
       input = gets.strip
       if Date::MONTHNAMES.include?(input.capitalize)
         list_games_by_month(input.capitalize)
+        puts "--------------------------------------"
+        puts ""
       elsif (1..UpcomingVideoGames::Game.games.count).include?(input.to_i)
         get_more_details(input.to_i)
       end
@@ -35,7 +36,8 @@ class UpcomingVideoGames::CLI
   end
 
   def list_games_by_month(month_input)
-    puts "------#{month_input}------"
+    puts ""
+    puts "-------------#{month_input}---------------"
     UpcomingVideoGames::Game.games.each.with_index(1) do |game, index|
       if game.release_month == month_input
         puts "#{index}. #{game.name} | #{game.release_date}"

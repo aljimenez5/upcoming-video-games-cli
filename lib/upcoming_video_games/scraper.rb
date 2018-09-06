@@ -32,7 +32,7 @@ class UpcomingVideoGames::Scraper
         first_link = Nokogiri::HTML(open(@collection_link))
         details[:price] = first_link.css("h3.ats-prodBuy-price").first.text.strip
         details[:console] = first_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-        details[:description] = first_link.css("p.productbyline").text.strip
+        details[:description] = !first_link.css("p.productbyline").text.strip.empty? ? first_link.css("p.productbyline").text.strip : first_link.css("div.longdescription.productbyline p").text.strip
         details[:purchase_link] = @collection_link
       end
     elsif url.include?("/browse")
@@ -41,7 +41,7 @@ class UpcomingVideoGames::Scraper
         second_link = Nokogiri::HTML(open(@browse_link))
         details[:price] = second_link.css("h3.ats-prodBuy-price").first.text.strip
         details[:console] = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-        details[:description] = second_link.css("p.productbyline").text.strip
+        details[:description] = !second_link.css("p.productbyline").text.strip.empty? ? second_link.css("p.productbyline").text.strip : second_link.css("div.longdescription.productbyline p").text.strip
         details[:purchase_link] = @browse_link
       end
     else
