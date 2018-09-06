@@ -51,7 +51,7 @@ class UpcomingVideoGames::Scraper
         details[:description] = game_page.css("p.productbyline").text.strip
         details[:purchase_link] = game.url
       end
-
+      game.add_game_details(details)
     end
   end
 

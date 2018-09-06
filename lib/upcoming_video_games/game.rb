@@ -1,6 +1,6 @@
 require 'pry'
 class UpcomingVideoGames::Game
-  attr_accessor :name, :release_date, :url, :console, :price, :description
+  attr_accessor :name, :release_date, :url, :console, :price, :description, :purchase_link
 
   @@games = []
 
