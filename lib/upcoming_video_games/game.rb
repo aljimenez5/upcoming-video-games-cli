@@ -12,7 +12,7 @@ class UpcomingVideoGames::Game
 
   def self.create_by_each_game(scraped_games)
     scraped_games.each do |game|
-      self.new(game)
+      self.new(game) unless game[:release_date].end_with?("2019")
     end
   end
 
