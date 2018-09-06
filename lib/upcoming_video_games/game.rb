@@ -11,7 +11,7 @@ class UpcomingVideoGames::Game
 
   def self.create_by_each_game(scraped_games)
     scraped_games.each do |game|
-      self.new(game)
+      self.new(game) unless game[:release_year] == 2018 && Date::MONTHNAMES[(1..8)].include?(game[:release_month])
     end
   end
 
@@ -21,6 +21,7 @@ class UpcomingVideoGames::Game
 
   def add_game_details(details)
     details.each {|key, value| self.send(("#{key}="), value)}
+    self
   end
 
 end
