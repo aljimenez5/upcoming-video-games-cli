@@ -16,17 +16,12 @@ class UpcomingVideoGames::CLI
     puts "GAME BY NUMBER ENTER: [Number Listed]"
     input = ""
     while input != "exit"
-      puts "What game(s) would you like to see?"
+      puts "Which game(s) would you like to see?"
       input = gets.strip
-      case input
-      when input =~ /\w/
+      if Date::MONTHNAMES.include?(input.capitalize)
         list_games_by_month(input.capitalize)
-      when input =~ /\d/
+      elsif (1..UpcomingVideoGames::Game.games.count).include?(input.to_i)
         get_more_details(input.to_i)
-      when input.to_i > UpcomingVideoGames::Game.games.count || UpcomingVideoGames::Game.games.each {|game| game.release_month == input}
-        puts "Invalid input."
-      when input
-        
       end
     end
   end
@@ -36,28 +31,28 @@ class UpcomingVideoGames::CLI
     all_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
     end
-    binding.pry
   end
 
-  def list_games_by_month(input)
+  def list_games_by_month(month_input)
+    puts "------#{month_input}------"
     UpcomingVideoGames::Game.games.each.with_index(1) do |game, index|
-      puts "------#{input}------"
       if game.release_month == month_input
-        puts "#{game.release_month}"
         puts "#{index}. #{game.name} | #{game.release_date}"
       end
     end
   end
 
-  def get_more_details
-    puts "Type in the number listed next to the game you would like to view more info on:"
-    selection = gets.strip
+  def get_more_details(input)
     all_games = UpcomingVideoGames::Game.games
     all_games.each.with_index(1) do |game, index|
-      if selection == index
-        binding.pry
-        puts "#{index}. #{game.name} | #{game.release_date}"
+      if index == input
+        UpcomingVideoGames::Scraper.scrape_game_details(game, game.url)
+        puts "#{game.name} | #{game.release_date}"
+        puts ""
         puts "#{game.console} | #{game.price}"
+        puts ""
+        puts "Purchase Here: #{game.purchase_link}"
+        puts ""
         puts "#{game.description}"
       end
     end

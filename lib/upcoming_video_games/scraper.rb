@@ -7,7 +7,7 @@ class UpcomingVideoGames::Scraper
   end
 
   def scrape
-    scrape_page
+    self.scrape_page
   end
 
   def scrape_page
@@ -23,7 +23,7 @@ class UpcomingVideoGames::Scraper
     UpcomingVideoGames::Game.create_by_each_game(scraped_games)
   end
 
-  def scrape_game_details(url)
+  def self.scrape_game_details(game, url)
     game_page = Nokogiri::HTML(open(url))
     details = {}
     if url.include?("/collection")
