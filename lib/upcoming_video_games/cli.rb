@@ -1,15 +1,21 @@
 class UpcomingVideoGames::CLI
 
-  def call
-    UpcomingVideoGames::Scraper.new("https://www.gamestop.com/collection/upcoming-video-games")
+  def initialize
     puts "Welcome to upcoming video game release dates!"
+    vgames = UpcomingVideoGames::Scraper.new("https://www.gamestop.com/collection/upcoming-video-games")
+    vgames.scrape
+  end
+
+  def call
     puts "Here is a list of upcoming Video Games:"
     list_games
   end
 
   def list_games
+    #UpcomingVideoGames::Scraper.scrape_game_details(UpcomingVideoGames::Game.game_url)
     all_games = UpcomingVideoGames::Game.games
     sorted_games = all_games.sort_by {|game_obj| game_obj.release_date}
+    binding.pry
     sorted_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
     end

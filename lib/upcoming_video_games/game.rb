@@ -10,7 +10,7 @@ class UpcomingVideoGames::Game
   end
 
 
-  def self.create_by_each_game(scraped_games = UpcomingVideoGames::Scraper.scrape_page)
+  def self.create_by_each_game(scraped_games)
     scraped_games.each do |game|
       self.new(game)
     end
@@ -20,10 +20,9 @@ class UpcomingVideoGames::Game
     @@games
   end
 
-  def game_url #I created this method to send the game.url to the scraper class to scrape
-    @@games.each {|game|
-      UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
-  end
+  # def self.game_url #I created this method to send the game.url to the scraper class to scrape
+  #   @@games.each {|game| UpcomingVideoGames::Scraper.scrape_game_details(game.url)}
+  # end
 
   def add_game_details(details)
     #or add_game_details(scraped_details = UpcomingVideoGames::Scraper.scrape_game_details(game_url))
