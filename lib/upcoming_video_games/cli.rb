@@ -12,10 +12,11 @@ class UpcomingVideoGames::CLI
     puts ""
     list_all_games
     puts ""
-    puts "GAMES BY MONTH ENTER: [January, February, March...]"
-    puts "GAME BY NUMBER ENTER: [Number Listed]"
+
     input = ""
     while input != "exit"
+      puts "GAMES BY MONTH ENTER: [January, February, March...]"
+      puts "GAME BY NUMBER ENTER: [Number Listed]"
       puts "Which game(s) would you like to see?"
       input = gets.strip
       if Date::MONTHNAMES.include?(input.capitalize)
@@ -47,34 +48,17 @@ class UpcomingVideoGames::CLI
     all_games.each.with_index(1) do |game, index|
       if index == input
         UpcomingVideoGames::Scraper.scrape_game_details(game, game.url)
+        puts "-----------------------------------------"
         puts "#{game.name} | #{game.release_date}"
-        puts ""
         puts "#{game.console} | #{game.price}"
         puts ""
         puts "Purchase Here: #{game.purchase_link}"
         puts ""
         puts "#{game.description}"
+        puts "-----------------------------------------"
       end
     end
   end
 
 
-
 end
-
-
-
-# puts "Welcome to upcoming video game release dates!"
-#
-# puts "Which month games would you like to see? (Sept, Oct, Nov, Dec, or All)"
-# puts "On which gaming system/console?"
-#  puts "Which month for upcoming games would you like to see? (September, October, November, December)"
-# month = gets.strip
-#
-# puts "Choose number of game you would like to view more info on."
-# OR puts "search with keyword"
-# game_list = gets.strip
-#
-#
-# puts "Would you like to see the list again?"
-#   ##have them be able to go back to list at any point of the program by typing in "games list"
