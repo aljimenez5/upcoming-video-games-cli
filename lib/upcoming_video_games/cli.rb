@@ -7,10 +7,15 @@ class UpcomingVideoGames::CLI
   end
 
   def call
-    puts "Type in the month to see that month's releases: (Jan-Dec or all)"
-    selection = ""
-    selection = gets.strip
+    puts ""
+    puts "Here is the list of upcoming video games:"
+    puts ""
     list_all_games
+    puts ""
+    puts "What month games would you like to see? (January, February, March ...)"
+    month_input = gets.strip.capitalize
+
+    list_games_by_month(month_input)
     else
       list_games_by_month
     end
@@ -23,22 +28,22 @@ class UpcomingVideoGames::CLI
     end
   end
 
-  # def list_games_by_month()
-  #   UpcomingVideoGames::Game.games.select {|game| game.release_month == "#{selection}"}
-  # end
+  def list_games_by_month(month_input)
+    UpcomingVideoGames::Game.games.select |game| game.release_month == month_input}
+  end
 
-  # def more_details
-  #   puts "Type in the number listed next to the game you would like to view more info on:"
-  #   selection = gets.strip
-  #   all_games = UpcomingVideoGames::Game.games
-  #   # all_games.each.with_index(1) do |game, index|
-  #   #   if selection == index
-  #   #     binding.pry
-  #   #     puts "#{index}. #{game.name} | #{game.release_date}"
-  #   #     puts "#{game.console} | #{game.price}"
-  #   #     puts "#{game.description}"
-  #   #   end
-  # end
+  def get_more_details
+    puts "Type in the number listed next to the game you would like to view more info on:"
+    selection = gets.strip
+    all_games = UpcomingVideoGames::Game.games
+    all_games.each.with_index(1) do |game, index|
+      if selection == index
+        binding.pry
+        puts "#{index}. #{game.name} | #{game.release_date}"
+        puts "#{game.console} | #{game.price}"
+        puts "#{game.description}"
+      end
+  end
 
 
 end
