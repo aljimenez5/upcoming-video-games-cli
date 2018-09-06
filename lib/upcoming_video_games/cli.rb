@@ -9,9 +9,8 @@ class UpcomingVideoGames::CLI
   def call
     puts "Type in the month to see that month's releases: (Jan-Dec or all)"
     selection = ""
-    selection = gets.strip.capitalize
-    if selection == "All"
-      list_all_games
+    selection = gets.strip
+    list_all_games
     else
       list_games_by_month
     end
@@ -21,13 +20,12 @@ class UpcomingVideoGames::CLI
     all_games = UpcomingVideoGames::Game.games
     all_games.each.with_index(1) do |game, index|
       puts "#{index}. #{game.name} | #{game.release_date}"
-      #puts "#{game.price}" ##this is just a test to see if the data is there
     end
   end
 
-  def list_games_by_month
-    UpcomingVideoGames::Game.games.select {|game| game.release_month == selection}
-  end
+  # def list_games_by_month()
+  #   UpcomingVideoGames::Game.games.select {|game| game.release_month == "#{selection}"}
+  # end
 
   # def more_details
   #   puts "Type in the number listed next to the game you would like to view more info on:"
