@@ -26,6 +26,7 @@ class UpcomingVideoGames::Scraper
 
   def scrape_game_details
     UpcomingVideoGames::Game.games.each do |game| game.url
+      binding.pry
       game_page = Nokogiri::HTML(open(game.url))
       details = {}
       if game.url.include?("/collection")

@@ -16,7 +16,7 @@ class UpcomingVideoGames::Game
   end
 
   def self.games
-    @@games.sort_by {|game_obj| game_obj.release_date}
+    @@games.sort_by! {|game_obj| [game_obj.release_year, game_obj.release_date]}
   end
 
   def add_game_details(details)
