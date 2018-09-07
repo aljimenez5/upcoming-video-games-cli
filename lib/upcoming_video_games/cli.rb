@@ -20,7 +20,7 @@ class UpcomingVideoGames::CLI
       input = gets.strip
       if Date::MONTHNAMES.include?(input.capitalize)
         list_games_by_month(input.capitalize)
-        puts "--------------------------------------"
+        puts "---------------------------------------"
         puts ""
       elsif (1..UpcomingVideoGames::Game.games.count).include?(input.to_i)
         get_more_details(input.to_i)
@@ -31,16 +31,16 @@ class UpcomingVideoGames::CLI
   def list_all_games
     all_games = UpcomingVideoGames::Game.games
     all_games.each.with_index(1) do |game, index|
-      puts "#{index}. #{game.name} | #{game.release_date}"
+      puts "#{index}. #{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
     end
   end
 
   def list_games_by_month(month_input)
     puts ""
-    puts "-------------#{month_input}---------------"
+    puts "-------------#{month_input}-----------------"
     UpcomingVideoGames::Game.games.each.with_index(1) do |game, index|
       if game.release_month == month_input
-        puts "#{index}. #{game.name} | #{game.release_date}"
+        puts "#{index}. #{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
       end
     end
   end
@@ -51,7 +51,7 @@ class UpcomingVideoGames::CLI
       if index == input
         UpcomingVideoGames::Scraper.scrape_game_details(game, game.url)
         puts "-----------------------------------------"
-        puts "#{game.name} | #{game.release_date}"
+        puts "#{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
         puts "#{game.console} | #{game.price}"
         puts ""
         puts "Purchase Here: #{game.purchase_link}"
