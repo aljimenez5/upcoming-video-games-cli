@@ -39,7 +39,7 @@ class UpcomingVideoGames::CLI
     puts ""
     puts "-------------#{month_input}-----------------"
     UpcomingVideoGames::Game.games.each.with_index(1) do |game, index|
-      if game.release_date.mon == month_input
+      if Date::MONTHNAMES[game.release_date.mon] == month_input
         puts "#{index}. #{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
       end
     end
