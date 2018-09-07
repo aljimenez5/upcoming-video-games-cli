@@ -26,27 +26,24 @@ class UpcomingVideoGames::Scraper
     game_page = Nokogiri::HTML(open(url))
     details = {}
     if url.include?("/collection")
-      game_page.css("div.product").each do |game_choice|
-        @collection_link = "https://www.gamestop.com" + game_choice.css("div.product_image a").first.attribute("href").value
-        first_link = Nokogiri::HTML(open(@collection_link))
-        details[:price] = first_link.css("h3.ats-prodBuy-price").first.text.strip
-        details[:console] = first_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-        details[:description] = !first_link.css("p.productbyline").text.strip.empty? ? first_link.css("p.productbyline").text.strip : first_link.css("div.longdescription.productbyline p").text.strip
-        details[:purchase_link] = @collection_link
-      end
+      @collection_link = "https://www.gamestop.com" + game_page.css("div.product_image a").first.attribute("href").value
+      first_link = Nokogiri::HTML(open(@collection_link))
+      binding.pry
+      details[:price] = first_link.css("h3.ats-prodBuy-price").first.text.strip
+      details[:console] = first_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+      details[:description] = first_link.css("p.productbyline").text.strip
+      details[:purchase_link] = @collection_link
     elsif url.include?("/browse")
-      game_page.css("div.product.new_product").each do |game_choice|
-        @browse_link = "https://www.gamestop.com" + game_choice.css("a.ats-product-title-lnk").first.attribute("href").value.strip
-        second_link = Nokogiri::HTML(open(@browse_link))
-        details[:price] = second_link.css("h3.ats-prodBuy-price").first.text.strip
-        details[:console] = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-        details[:description] = !second_link.css("p.productbyline").text.strip.empty? ? second_link.css("p.productbyline").text.strip : second_link.css("div.longdescription.productbyline p").text.strip
-        details[:purchase_link] = @browse_link
-      end
+      @browse_link = "https://www.gamestop.com" + game_choice.css("a.ats-product-title-lnk").first.attribute("href").value.strip
+      second_link = Nokogiri::HTML(open(@browse_link))
+      details[:price] = second_link.css("h3.ats-prodBuy-price").first.text.strip
+      details[:console] = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
+      details[:description] = second_link.css("p.productbyline").text.strip
+      details[:purchase_link] = @browse_link
     else
       details[:price] = game_page.css("h3.ats-prodBuy-price").first.text.strip
       details[:console] = game_page.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
-      details[:description] = !game_page.css("p.productbyline").text.strip.empty? ? game_page.css("p.productbyline").text.strip : game_page.css("div.longdescription.productbyline p").text.strip
+      details[:description] = game_page.css("p.productbyline").text.strip
       details[:purchase_link] = game.url
     end
     game.add_game_details(details)
