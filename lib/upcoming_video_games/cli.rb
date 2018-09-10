@@ -14,6 +14,7 @@ class UpcomingVideoGames::CLI
     puts ""
     input = ""
     while input != "exit"
+      puts "TO EXIT ENTER: [exit]"
       puts "GAMES BY MONTH ENTER: [January, February, March...]"
       puts "GAME BY NUMBER ENTER: [Number Listed]"
       puts "Which game(s) would you like to see?"
@@ -24,6 +25,10 @@ class UpcomingVideoGames::CLI
         puts ""
       elsif (1..UpcomingVideoGames::Game.games.count).include?(input.to_i)
         get_more_details(input.to_i)
+      elsif input == "list all games"
+        list_all_games
+      else
+        puts "Invalid input" unless input == "exit"
       end
     end
   end
@@ -46,21 +51,20 @@ class UpcomingVideoGames::CLI
   end
 
   def get_more_details(input)
-    all_games = UpcomingVideoGames::Game.games
-    all_games.each.with_index(1) do |game, index|
-      if index == input
-        UpcomingVideoGames::Scraper.scrape_game_details(game, game.url)
-        puts "-----------------------------------------"
-        puts "#{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
-        puts "#{game.console} | #{game.price}"
-        puts ""
-        puts "Purchase Here: #{game.purchase_link}"
-        puts ""
-        puts "#{game.description}"
-        puts "-----------------------------------------"
-      end
+    game = UpcomingVideoGames::Game.games[input - 1]
+    if !game.instance_variable_defined?(:@price)
+      UpcomingVideoGames::Scraper.scrape_game_details(game, game.url)
     end
+    puts "-----------------------------------------"
+    puts "#{game.name} | #{game.release_date.strftime('%m/%d/%Y')}"
+    puts "#{game.console} | #{game.price}"
+    puts ""
+    puts "Purchase Here: #{game.purchase_link}"
+    puts ""
+    puts "#{game.description}"
+    puts "-----------------------------------------"
+    puts ""
+    puts "TO SEE ALL GAMES ENTER: [list all games]"
   end
-
 
 end

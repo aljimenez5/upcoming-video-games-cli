@@ -33,7 +33,7 @@ class UpcomingVideoGames::Scraper
       details[:description] = first_link.css("p.productbyline").text.strip
       details[:purchase_link] = @collection_link
     elsif url.include?("/browse")
-      @browse_link = "https://www.gamestop.com" + game_choice.css("a.ats-product-title-lnk").first.attribute("href").value.strip
+      @browse_link = "https://www.gamestop.com" + game_page.css("a.ats-product-title-lnk").first.attribute("href").value.strip
       second_link = Nokogiri::HTML(open(@browse_link))
       details[:price] = second_link.css("h3.ats-prodBuy-price").first.text.strip
       details[:console] = second_link.css("li.ats-prodRating-platDet").text.sub('Platform:', '').strip
