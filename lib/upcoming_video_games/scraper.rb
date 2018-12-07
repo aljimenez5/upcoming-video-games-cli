@@ -11,7 +11,6 @@ def scrape_page
     @gamestop_page.css("a.product_spot").each do |game|
       date_string = game.css("p span").text.strip
       release_date = Date.strptime(date_string, '%m/%d/%Y') rescue nil
-      # binding.pry
       name = game.css("p").text.sub(date_string, '').strip
       url = "https://www.gamestop.com" + game.attribute("href").value
       scraped_games << {:name => name, :release_date => release_date, :url => url}
