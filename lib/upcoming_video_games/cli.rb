@@ -3,7 +3,7 @@ class UpcomingVideoGames::CLI
   def initialize
     puts "Welcome to Video Games Release dates!"
     vgames = UpcomingVideoGames::Scraper.new("https://www.gamestop.com/collection/upcoming-video-games")
-    vgames.scrape
+    vgames.scrape_page
   end
 
   def call

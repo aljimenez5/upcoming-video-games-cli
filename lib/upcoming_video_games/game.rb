@@ -12,7 +12,7 @@ class UpcomingVideoGames::Game
   def self.create_by_each_game(scraped_games)
     scraped_games.each do |game|
       #write a comment to explain release year
-      self.new(game) unless game[:release_date].between?(DateTime.new(2018, 1, 1), DateTime.new(2018, 9, 1))
+      self.new(game) unless game[:release_date] < (DateTime.now) rescue nil
     end
   end
 
