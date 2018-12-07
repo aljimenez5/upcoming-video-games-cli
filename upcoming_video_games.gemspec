@@ -6,11 +6,11 @@ require "upcoming_video_games/version"
 Gem::Specification.new do |spec|
   spec.name          = "upcoming_video_games"
   spec.version       = UpcomingVideoGames::VERSION
-  spec.authors       = ["aljimenez5"]
+  spec.authors       = ["Arvida Jimenez - aljimenez5"]
   spec.email         = ["arvida.jimenez@gmail.com"]
 
-  spec.summary       = %q{Upcoming Video Games.}
-  spec.description   =
+  spec.summary       = "Upcoming Video Games!"
+  spec.description   = "Get List of Upcoming Games"
   spec.homepage      = "https://github.com/aljimenez5/upcoming-video-games-cli"
   spec.license       = "MIT"
 
